@@ -56,6 +56,7 @@ File: docs/*
 You can open it using Swagger Editor or import into Postman.
 
 📂 Project Structure
+
 app/
  ┣ Http/
  ┃ ┣ Controllers/
