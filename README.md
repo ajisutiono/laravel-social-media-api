@@ -31,22 +31,28 @@ This project is designed with a clean architecture using Services and Repositori
    cd social-media-api
 
 2. Install dependencies
+   ```bash
    composer install
 
-3. Copy .env.example to .env
+4. Copy .env.example to .env
+   ```bash
    cp .env.example .env
 
-4. Generate Laravel application key
+6. Generate Laravel application key
+   ```bash
     php artisan key:generate
 
-5. Configure your database in .env, then run migrations and seeders
+8. Configure your database in .env, then run migrations and seeders
+   ```bash
     php artisan migrate --seed
 
-6. Start the development server
-
+10. Start the development server
+    ```bash
     php artisan serve
 
-    The API will be available at http://localhost:8000/
+   The API will be available at http://localhost:8000/
+
+
 
 
 📖 API Documentation
@@ -54,6 +60,8 @@ The API documentation is available in OpenAPI (Swagger) format.
 File: docs/*
 
 You can open it using Swagger Editor or import into Postman.
+
+
 
 📂 Project Structure
 
@@ -83,9 +91,12 @@ tests/
 
 🧪 Testing
 Run the tests with:
+
+```bash
 php artisan test
-or
-postman
+
+```
+or using Postaman
 
 
 📄 License
