@@ -58,16 +58,27 @@ You can open it using Swagger Editor or import into Postman.
 📂 Project Structure
 
 app/
+
  ┣ Http/
+ 
  ┃ ┣ Controllers/
+ 
  ┃ ┗ Middleware/
+ 
  ┣ Models/
+ 
  ┣ Services/        # Business logic
+ 
  ┣ Repositories/    # Data access layer
+ 
 config/
+
 database/
+
 routes/
+
 tests/
+
 
 
 🧪 Testing
