@@ -1,0 +1,161 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "POST API",
+    "description": "Post Api",
+    "contact": {
+      "name": "API Support",
+      "url": "https://github.com/ajisutiono",
+      "email": "raisadajiwa@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000/api"
+    }
+  ],
+  "paths": {
+    "/posts": {
+      "post": {
+        "description": "Adding new post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary",
+                    "nullable": true
+                  }
+                },
+                "required": ["content"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully added new post"
+          }
+        }
+      },
+      "get": {
+        "description": "Get all posts",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved all posts"
+          }
+        }
+      }
+    },
+    "/posts/{id}": {
+      "get": {
+        "description": "Get post by id",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved post"
+          }
+        }
+      },
+      "patch": {
+        "description": "Update post by id",
+        "responses": {
+          "200": {
+            "description": "Successfully updated post"
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete post by id",
+        "responses": {
+          "200": {
+            "description": "Successfully deleted post"
+          }
+        }
+      }
+    },
+    "/posts/{id}/comments": {
+      "post": {
+        "description": "Add a comment to a post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "comment": { "type": "string" }
+                },
+                "required": ["comment"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully added comment"
+          }
+        }
+      },
+      "get": {
+        "description": "Get all comments for a post",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved all comments"
+          }
+        }
+      }
+    },
+    "/posts/{postId}/comments/{commentId}": {
+      "delete": {
+        "description": "Delete a comment from a post",
+        "responses": {
+          "200": {
+            "description": "Successfully deleted comment"
+          }
+        }
+      }
+    },
+    "/posts/{id}/like": {
+      "post": {
+        "description": "Like a post",
+        "responses": {
+          "200": {
+            "description": "Successfully liked post"
+          }
+        }
+      }
+    },
+    "/posts/{id}/likes": {
+      "get": {
+        "description": "Get all likes for a post",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved all likes"
+          }
+        }
+      }
+    },
+    "/posts/{id}/unlike": {
+      "delete": {
+        "description": "Unlike a post",
+        "responses": {
+          "200": {
+            "description": "Successfully unliked post"
+          }
+        }
+      }
+    }
+  }
+}
