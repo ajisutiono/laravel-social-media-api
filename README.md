@@ -8,7 +8,7 @@ This project is designed with a clean architecture using Services and Repositori
 ## ⚙️ Tech Stack
 - [Laravel 11](https://laravel.com/)
 - MySQL
-- JWT Authentication
+- Laravel Passport for Authentication & Authorization
 - OpenAPI/Swagger (for API documentation)
 
 ---
