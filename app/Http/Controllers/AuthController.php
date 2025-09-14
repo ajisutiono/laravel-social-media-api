@@ -54,4 +54,14 @@ class AuthController extends Controller
             'expires_in'   => 3600,
         ], 200);
     }
+
+    public function logout()
+    {
+        $this->authService->logoutUser();
+
+        return response()->json([
+            "status" => 'success',
+            "message" => "Logged out successfully"
+        ]);
+    }
 }

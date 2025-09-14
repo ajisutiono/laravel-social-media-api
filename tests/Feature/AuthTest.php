@@ -45,7 +45,7 @@ class AuthTest extends TestCase
             'email'    => $user->email,
             'password' => 'rahasia',
         ]);
-       
+
 
         $response->assertStatus(200)
             ->assertJsonStructure([
@@ -55,5 +55,35 @@ class AuthTest extends TestCase
                 'token_type',
                 'expires_in'
             ]);
+    }
+
+    #[Test]
+    public function user_can_logout()
+    {
+        $user = User::factory()->create([
+            'password' => bcrypt('rahasia'),
+        ]);
+
+        $loginResponse = $this->postJson('/api/login', [
+            'email'    => $user->email,
+            'password' => 'rahasia',
+        ]);
+
+        $token = $loginResponse['access_token'];
+
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer ' . $token,
+        ])->deleteJson('/api/logout');
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'status'  => 'success',
+                'message' => 'Logged out successfully',
+            ]);
+
+        $this->assertDatabaseHas('oauth_access_tokens', [
+            'user_id' => $user->id,
+            'revoked' => true,
+        ]);
     }
 }

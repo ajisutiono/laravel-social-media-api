@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Repositories\AuthRepository;
-use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
 
 class AuthService
@@ -34,5 +33,10 @@ class AuthService
             'user'  => $user,
             'token' => $token,
         ];
+    }
+
+    public function logoutUser()
+    {
+        return Auth::user()->token()->revoke();
     }
 }
