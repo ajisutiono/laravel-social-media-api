@@ -40,18 +40,12 @@ class AuthController extends Controller
             ], 401);
         }
 
-        // return response()->json([
-        //     'message' => 'Login success',
-        //     'user'    => $result['user'],
-        //     'token'   => $result['token'],
-        // ], 200);
-
         return response()->json([
             'message' => 'Login success',
-            'user' => $result['user'],
             'access_token' => $result['token'],
             'token_type'   => 'Bearer',
             'expires_in'   => 3600,
+            'user' => $result['user'],
         ], 200);
     }
 

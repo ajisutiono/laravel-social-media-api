@@ -50,10 +50,10 @@ class AuthTest extends TestCase
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'message',
-                'user',
                 'access_token',
                 'token_type',
-                'expires_in'
+                'expires_in',
+                'user'
             ]);
     }
 
