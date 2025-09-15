@@ -20,6 +20,8 @@ class AuthTest extends TestCase
         $this->seed(PassportSeeder::class);
     }
 
+    // scenarios register test
+
     #[Test]
     public function user_can_register()
     {
@@ -34,6 +36,37 @@ class AuthTest extends TestCase
         $this->assertDatabaseHas('users', ['email' => 'testing@example.com']);
     }
 
+    #[Test]
+    public function user_cannot_register_with_existing_email()
+    {
+        User::factory()->create(['email' => 'testing@example.com']);
+
+        $response = $this->postJson('/api/register', [
+            'fullname' => 'Testing',
+            'email'    => 'testing@example.com',
+            'password' => 'rahasia',
+            'bio'      => 'Halo, I am user testing',
+        ]);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['email']);
+    }
+
+    #[Test]
+    public function user_cannot_register_with_missing_fields()
+    {
+        $response = $this->postJson('/api/register', [
+            'fullname' => 'Testing',
+            'email' => 'testing@example.com'
+        ]);
+
+        $response->assertStatus(422)
+            ->assertJsonValidationErrors(['password']);
+    }
+
+
+
+    // scenarios login test
     #[Test]
     public function user_can_login_and_get_token()
     {
@@ -58,6 +91,40 @@ class AuthTest extends TestCase
     }
 
     #[Test]
+    public function user_cannot_login_with_wrong_password()
+    {
+        $user = User::factory()->create([
+            'password' => bcrypt('rahasia')
+        ]);
+
+        $response = $this->postJson('/api/login', [
+            'email' => 'teting@example.com',
+            'password' => 'wrongpassword',
+        ]);
+
+        $response->assertStatus(401)
+            ->assertJson([
+                'error' => 'Invalid email or password'
+            ]);
+    }
+
+    #[Test]
+    public function user_cannot_login_with_unregistered_email()
+    {
+        $response = $this->postJson('/api/login', [
+            'email' => 'wrongemail@example.com',
+            'password' => 'rahasia',
+        ]);
+
+        $response->assertStatus(401)
+            ->assertJson([
+                'error' => 'Invalid email or password'
+            ]);
+    }
+
+
+    // scenarios logout test
+    #[Test]
     public function user_can_logout()
     {
         $user = User::factory()->create([
@@ -73,7 +140,7 @@ class AuthTest extends TestCase
 
         $response = $this->withHeaders([
             'Authorization' => 'Bearer ' . $token,
-        ])->deleteJson('/api/logout');
+        ])->postJson('/api/logout');
 
         $response->assertStatus(200)
             ->assertJson([
@@ -85,5 +152,23 @@ class AuthTest extends TestCase
             'user_id' => $user->id,
             'revoked' => true,
         ]);
+    }
+
+    #[Test]
+    public function user_cannot_logout_without_token()
+    {
+        $response = $this->postJson('/api/logout');
+
+        $response->assertStatus(401); // unauthorized
+    }
+
+    #[Test]
+    public function user_cannot_logout_with_invalid_token()
+    {
+        $response = $this->withHeaders([
+            'Authorization' => 'Bearer fake_token'
+        ])->postJson('/api/logout');
+
+        $response->assertStatus(401);
     }
 }
