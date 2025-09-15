@@ -91,7 +91,7 @@ tests/
 
 🧪 Testing
 Run the tests with:
-
+PHPUnit
 ```bash
 php artisan test
 
