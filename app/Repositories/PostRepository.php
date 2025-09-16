@@ -10,4 +10,9 @@ class PostRepository
     {
         return Post::create($data);
     }
+
+    public function getAll()
+    {
+        return Post::all();
+    }
 }

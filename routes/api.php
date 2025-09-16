@@ -14,4 +14,5 @@ Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:api')
 // post routes
 Route::prefix('posts')->middleware('auth:api')->group(function () {
     Route::post('/', [PostController::class, 'store']);
+    Route::get('/', [PostController::class, 'getAll']);
 });

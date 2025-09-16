@@ -25,4 +25,9 @@ class PostService
 
         return $this->postRepository->store($data);
     }
+
+    public function getAllPost()
+    {
+        return $this->postRepository->getAll();
+    }
 }

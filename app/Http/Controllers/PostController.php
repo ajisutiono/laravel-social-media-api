@@ -24,4 +24,14 @@ class PostController extends Controller
             'data' => $post
         ], 201);
     }
+
+    public function getAll()
+    {
+        $posts = $this->postService->getAllPost();
+
+        return response()->json([
+            'status' => 'Success',
+            'data' => $posts
+        ], 200);
+    }
 }
