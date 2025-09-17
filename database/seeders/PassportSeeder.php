@@ -16,18 +16,9 @@ class PassportSeeder extends Seeder
     {
         $clientRepository = app(ClientRepository::class);
 
-        if (!DB::table('oauth_clients')->where('name', 'Personal Access Client')->exists()) {
-            $clientRepository->createPersonalAccessGrantClient(
-                'Personal Access Client',
-                'users'
-            );
-
-            $clientRepository->createPasswordGrantClient(
-                '',
-                'Password Grant Client',
-                'http://localhost',
-                'users'
-            );
-        }
+        $clientRepository->createPersonalAccessGrantClient(
+            'Social Media Api',
+            'users'
+        );
     }
 }

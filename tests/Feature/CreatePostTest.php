@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
-class PostTest extends TestCase
+class CreatePostTest extends TestCase
 {
     use RefreshDatabase;
 

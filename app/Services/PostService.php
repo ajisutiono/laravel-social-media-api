@@ -30,4 +30,14 @@ class PostService
     {
         return $this->postRepository->getAll();
     }
+
+    public function getByIdPost($postId)
+    {
+        return $this->postRepository->getId($postId);
+    }
+
+    public function editByIdPost($postId, array $data)
+    {
+        return $this->postRepository->update($postId, $data);
+    }
 }
