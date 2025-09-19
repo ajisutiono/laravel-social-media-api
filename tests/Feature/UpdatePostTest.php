@@ -7,7 +7,9 @@ use App\Models\User;
 use Database\Seeders\PassportSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Queue\Console\RetryCommand;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
@@ -38,7 +40,8 @@ class UpdatePostTest extends TestCase
     public function users_can_update_posts_their_own()
     {
         $user = User::factory()->create([
-            'password' => 'rahasia'
+            'password' => bcrypt('rahasia'),
+
         ]);
 
         $token = $this->loginAndGetToken($user);
@@ -65,17 +68,15 @@ class UpdatePostTest extends TestCase
     public function users_cannot_update_posts_that_are_not_their_own()
     {
         $userA = User::factory()->create([
-            'password' => 'rahasia'
+            'password' => bcrypt('rahasia'),
         ]);
-
-        $tokenA = $this->loginAndGetToken($userA);
 
         $postA = Post::factory()->create([
             'user_id' => $userA->id
         ]);
 
         $userB = User::factory()->create([
-            'password' => 'rahasia'
+            'password' => bcrypt('rahasia'),
         ]);
 
         $tokenB = $this->loginAndGetToken($userB);
@@ -97,7 +98,7 @@ class UpdatePostTest extends TestCase
     public function users_cannot_update_posts_their_own_without_title()
     {
         $user = User::factory()->create([
-            'password' => 'rahasia'
+            'password' => bcrypt('rahasia'),
         ]);
 
         $token = $this->loginAndGetToken($user);
@@ -123,7 +124,7 @@ class UpdatePostTest extends TestCase
     public function users_cannot_update_posts_their_own_without_content()
     {
         $user = User::factory()->create([
-            'password' => 'rahasia'
+            'password' => bcrypt('rahasia'),
         ]);
 
         $token = $this->loginAndGetToken($user);
@@ -149,7 +150,7 @@ class UpdatePostTest extends TestCase
     public function users_cannot_update_posts_that_do_not_exist()
     {
         $user = User::factory()->create([
-            'password' => 'rahasia'
+            'password' => bcrypt('rahasia'),
         ]);
 
         $token = $this->loginAndGetToken($user);
@@ -165,5 +166,54 @@ class UpdatePostTest extends TestCase
             ->assertJsonStructure([
                 'message',
             ]);
+    }
+
+    #[Test]
+    public function user_can_update_post_with_new_image()
+    {
+        Storage::fake('public');
+
+        $user = User::factory()->create([
+            'password' => bcrypt('rahasia'),
+        ]);
+
+        $token = $this->loginAndGetToken($user);
+
+        $post = Post::factory()->create([
+            'user_id' => $user->id,
+        ]);
+
+        $payload = [
+            "title"   => "Edit Title",
+            "content" => "Edit content",
+            "image"   => UploadedFile::fake()->image('edit-image.jpg')
+        ];
+
+        $response = $this->withHeaders([
+            "Authorization" => "Bearer " . $token,
+        ])->patch("/api/posts/{$post->id}", $payload);
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'message' => 'Successfully updated post',
+                'data' => [
+                    'id'      => $post->id,
+                    'title'   => $payload['title'],
+                    'content' => $payload['content'],
+                    'user_id' => $user->id,
+                ],
+            ]);
+
+        $imagePath = str_replace('/storage/', '', $response->json('data.image'));
+
+        $this->assertFileExists(Storage::disk('public')->path($imagePath));
+
+        $this->assertDatabaseHas('posts', [
+            'id'      => $post->id,
+            'title'   => $payload['title'],
+            'content' => $payload['content'],
+            'image'   => $imagePath,
+            'user_id' => $user->id,
+        ]);
     }
 }

@@ -53,7 +53,7 @@ class PostController extends Controller
 
         return response()->json([
             'message' => 'Successfully updated post',
-            'data' => $post
+            'data' => $post,
         ], 200);
     }
 }

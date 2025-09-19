@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Post;
 use App\Repositories\PostRepository;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,6 +39,11 @@ class PostService
 
     public function editByIdPost($postId, array $data)
     {
+        if (isset($data['image'])) {
+            $path = $data['image']->store('posts', 'public');
+            $data['image'] = $path;
+        }
+
         return $this->postRepository->update($postId, $data);
     }
 }
