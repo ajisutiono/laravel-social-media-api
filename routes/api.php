@@ -17,4 +17,5 @@ Route::prefix('posts')->middleware('auth:api')->group(function () {
     Route::get('/', [PostController::class, 'showAll']);
     Route::get('/{postId}', [PostController::class, 'show']);
     Route::patch('/{postId}', [PostController::class, 'edit']);
+    Route::delete('/{postId}', [PostController::class, 'destroy']);
 });

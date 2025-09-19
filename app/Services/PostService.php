@@ -46,4 +46,9 @@ class PostService
 
         return $this->postRepository->update($postId, $data);
     }
+
+    public function deleteById($postId)
+    {
+        return $this->postRepository->delete($postId);
+    }
 }

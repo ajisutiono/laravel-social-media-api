@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeletePostRequest;
 use App\Http\Requests\PostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
@@ -54,6 +55,16 @@ class PostController extends Controller
         return response()->json([
             'message' => 'Successfully updated post',
             'data' => $post,
+        ], 200);
+    }
+
+    public function destroy(DeletePostRequest $request, $postId)
+    {
+        $post = $this->postService->deleteById($postId, $request->validated());
+
+        return response()->json([
+            'message' => 'Successfully deleted post',
+            'data' => $post
         ], 200);
     }
 }

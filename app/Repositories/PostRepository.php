@@ -28,4 +28,12 @@ class PostRepository
 
         return $post;
     }
+
+    public function delete($postId)
+    {
+        $post = Post::findOrFail($postId);
+        $post->delete();
+
+        return $post;
+    }
 }
