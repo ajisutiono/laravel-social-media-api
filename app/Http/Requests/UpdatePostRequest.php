@@ -17,7 +17,7 @@ class UpdatePostRequest extends FormRequest
         $postId = $this->route('postId');
         $post = Post::find($postId);
 
-        return $post && $post->user_id === Auth::id();
+        return $post ? $post->user_id === Auth::id() : true;
     }
 
     /**
