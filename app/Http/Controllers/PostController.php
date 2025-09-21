@@ -48,7 +48,7 @@ class PostController extends Controller
         ], 200);
     }
 
-    public function edit(UpdatePostRequest $request, $postId)
+    public function update(UpdatePostRequest $request, $postId)
     {
         $post = $this->postService->editByIdPost($postId, $request->validated());
 

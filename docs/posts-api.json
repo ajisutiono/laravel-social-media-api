@@ -1,348 +1,557 @@
 {
-  "openapi": "3.0.3",
-  "info": {
-    "title": "POST API",
-    "description": "API for managing posts, comments, and likes.",
-    "contact": {
-      "name": "API Support",
-      "url": "https://github.com/ajisutiono",
-      "email": "raisadajiwa@gmail.com"
+    "openapi": "3.0.3",
+    "info": {
+        "title": "POST API",
+        "description": "API for managing posts, comments, and likes.",
+        "contact": {
+            "name": "API Support",
+            "url": "https://github.com/ajisutiono",
+            "email": "raisadajiwa@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
     },
-    "license": {
-      "name": "Apache 2.0",
-      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
-    },
-    "version": "1.0.0"
-  },
-  "servers": [
-    {
-      "url": "http://localhost:8000/api"
-    }
-  ],
-  "paths": {
-    "/posts": {
-      "post": {
-        "summary": "Create a new post",
-        "description": "Adding new post",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "title": { "type": "string", "example": "My First Post" },
-                  "content": { "type": "string", "example": "This is the content of the post" },
-                  "image": { "type": "string", "format": "binary", "nullable": true }
+    "servers": [
+        {
+            "url": "http://localhost:8000/api"
+        }
+    ],
+    "paths": {
+        "/posts": {
+            "post": {
+                "summary": "Create a new post",
+                "description": "Adding new post",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "My First Post"
+                                    },
+                                    "content": {
+                                        "type": "string",
+                                        "example": "This is the content of the post"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary",
+                                        "nullable": true
+                                    }
+                                },
+                                "required": ["title", "content"]
+                            }
+                        }
+                    }
                 },
-                "required": ["title", "content"]
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Successfully added new post",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": { "type": "integer" },
-                    "title": { "type": "string" },
-                    "content": { "type": "string" },
-                    "image": { "type": "string", "nullable": true },
-                    "created_at": { "type": "string", "format": "date-time" }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "get": {
-        "summary": "Get all posts",
-        "description": "Mengambil semua postingan yang ada.",
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved all posts",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": { "type": "integer" },
-                      "title": { "type": "string" },
-                      "content": { "type": "string" },
-                      "image": { "type": "string", "nullable": true },
-                      "created_at": { "type": "string", "format": "date-time" }
+                "responses": {
+                    "201": {
+                        "description": "Successfully added new post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": { "type": "integer" },
+                                        "title": { "type": "string" },
+                                        "content": { "type": "string" },
+                                        "image": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
-                  }
                 }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/posts/{id}": {
-      "get": {
-        "summary": "Get post by ID",
-        "description": "Mengambil detail postingan berdasarkan ID.",
-        "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved post",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": { "type": "integer" },
-                    "title": { "type": "string" },
-                    "content": { "type": "string" },
-                    "image": { "type": "string", "nullable": true },
-                    "created_at": { "type": "string", "format": "date-time" }
-                  }
+            },
+            "get": {
+                "summary": "Get all posts",
+                "description": "Mengambil semua postingan yang ada.",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved all posts",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": { "type": "integer" },
+                                            "title": { "type": "string" },
+                                            "content": { "type": "string" },
+                                            "image": {
+                                                "type": "string",
+                                                "nullable": true
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
-        }
-      },
-      "patch": {
-        "summary": "Update post by ID",
-        "description": "Update data postingan berdasarkan ID.",
-        "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "title": { "type": "string" },
-                  "content": { "type": "string" },
-                  "image": { "type": "string", "format": "binary", "nullable": true }
-                }
-              }
-            }
-          }
         },
-        "responses": {
-          "200": {
-            "description": "Successfully updated post",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": { "type": "integer" },
-                    "title": { "type": "string" },
-                    "content": { "type": "string" },
-                    "image": { "type": "string", "nullable": true },
-                    "updated_at": { "type": "string", "format": "date-time" }
-                  }
+        "/posts/{postId}": {
+            "get": {
+                "summary": "Get post by ID",
+                "description": "Mengambil detail postingan berdasarkan ID.",
+                "parameters": [
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": { "type": "integer" },
+                                        "title": { "type": "string" },
+                                        "content": { "type": "string" },
+                                        "image": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete post by ID",
-        "description": "Menghapus postingan berdasarkan ID.",
-        "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully deleted post",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": { "type": "string", "example": "Post deleted successfully" }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/posts/{id}/comments": {
-      "post": {
-        "summary": "Add comment to post",
-        "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "comment": { "type": "string", "example": "Nice post!" }
+            },
+            "patch": {
+                "summary": "Update post by ID",
+                "description": "Update data postingan berdasarkan ID.",
+                "parameters": [
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer" }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": { "type": "string" },
+                                    "content": { "type": "string" },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "binary",
+                                        "nullable": true
+                                    }
+                                }
+                            }
+                        }
+                    }
                 },
-                "required": ["comment"]
-              }
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": { "type": "integer" },
+                                        "title": { "type": "string" },
+                                        "content": { "type": "string" },
+                                        "image": {
+                                            "type": "string",
+                                            "nullable": true
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete post by ID",
+                "description": "Menghapus postingan berdasarkan ID.",
+                "parameters": [
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Post deleted successfully"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-          }
         },
-        "responses": {
-          "201": {
-            "description": "Successfully added comment",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": { "type": "integer" },
-                    "post_id": { "type": "integer" },
-                    "comment": { "type": "string" },
-                    "created_at": { "type": "string", "format": "date-time" }
-                  }
+        "/posts/{postId}/comments": {
+            "post": {
+                "summary": "Add comment to post",
+                "parameters": [
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer" }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "comment": {
+                                        "type": "string",
+                                        "example": "Nice post!"
+                                    }
+                                },
+                                "required": ["comment"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfully added comment",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": { "type": "integer" },
+                                        "post_id": { "type": "integer" },
+                                        "comment": { "type": "string" },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
-              }
+            },
+            "get": {
+                "summary": "Get comments for all post",
+                "parameters": [
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved comments",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": { "type": "integer" },
+                                            "post_id": { "type": "integer" },
+                                            "comment": { "type": "string" },
+                                            "created_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-          }
-        }
-      },
-      "get": {
-        "summary": "Get comments for a post",
-        "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved comments",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
+        },
+        "/posts/{postId}/comments/{commentId}": {
+            "get": {
+            "summary": "Get comments for a post",
+            "parameters": [
+                {
+                "name": "postId",
+                "in": "path",
+                "required": true,
+                "schema": { "type": "integer" }
+                },
+                {
+                "name": "commentId",
+                "in": "path",
+                "required": true,
+                "schema": { "type": "integer" }
+                }
+            ],
+            "responses": {
+                "200": {
+                "description": "Successfully retrieved comments",
+                "content": {
+                    "application/json": {
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": { "type": "integer" },
+                            "post_id": { "type": "integer" },
+                            "comment": { "type": "string" },
+                            "created_at": {
+                            "type": "string",
+                            "format": "date-time"
+                            }
+                        }
+                        }
+                    }
+                    }
+                }
+                }
+            }
+            },
+            "patch": {
+            "summary": "Edit comment by ID",
+            "description": "Update a comment for a post by comment ID.",
+            "parameters": [
+                {
+                "name": "postId",
+                "in": "path",
+                "required": true,
+                "schema": { "type": "integer" }
+                },
+                {
+                "name": "commentId",
+                "in": "path",
+                "required": true,
+                "schema": { "type": "integer" }
+                }
+            ],
+            "requestBody": {
+                "required": true,
+                "content": {
+                "application/json": {
+                    "schema": {
                     "type": "object",
                     "properties": {
-                      "id": { "type": "integer" },
-                      "post_id": { "type": "integer" },
-                      "comment": { "type": "string" },
-                      "created_at": { "type": "string", "format": "date-time" }
+                        "comment": {
+                        "type": "string",
+                        "example": "Updated comment text"
+                        }
+                    },
+                    "required": ["comment"]
                     }
-                  }
                 }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/posts/{postId}/comments/{commentId}": {
-      "delete": {
-        "summary": "Delete comment by ID",
-        "parameters": [
-          { "name": "postId", "in": "path", "required": true, "schema": { "type": "integer" } },
-          { "name": "commentId", "in": "path", "required": true, "schema": { "type": "integer" } }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully deleted comment",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": { "type": "string", "example": "Comment deleted successfully" }
-                  }
                 }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/posts/{id}/like": {
-      "post": {
-        "summary": "Like a post",
-        "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully liked post",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": { "type": "string", "example": "Post liked successfully" }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/posts/{id}/likes": {
-      "get": {
-        "summary": "Get likes for a post",
-        "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved likes",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": { "type": "integer" },
-                      "user_id": { "type": "integer" },
-                      "post_id": { "type": "integer" },
-                      "created_at": { "type": "string", "format": "date-time" }
+            },
+            "responses": {
+                "200": {
+                "description": "Successfully updated comment",
+                "content": {
+                    "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                        "id": { "type": "integer" },
+                        "post_id": { "type": "integer" },
+                        "comment": { "type": "string" },
+                        "updated_at": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                        }
                     }
-                  }
+                    }
                 }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/posts/{id}/unlike": {
-      "delete": {
-        "summary": "Unlike a post",
-        "parameters": [
-          { "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully unliked post",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": { "type": "string", "example": "Post unliked successfully" }
-                  }
                 }
-              }
             }
-          }
+            },
+            "delete": {
+            "summary": "Delete comment by ID",
+            "parameters": [
+                {
+                "name": "postId",
+                "in": "path",
+                "required": true,
+                "schema": { "type": "integer" }
+                },
+                {
+                "name": "commentId",
+                "in": "path",
+                "required": true,
+                "schema": { "type": "integer" }
+                }
+            ],
+            "responses": {
+                "200": {
+                "description": "Successfully deleted comment",
+                "content": {
+                    "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                        "message": {
+                            "type": "string",
+                            "example": "Comment deleted successfully"
+                        }
+                        }
+                    }
+                    }
+                }
+                }
+            }
+            }
+        },
+        "/posts/{postId}/like": {
+            "post": {
+                "summary": "Like a post",
+                "parameters": [
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully liked post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Post liked successfully"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/posts/{postId}/likes": {
+            "get": {
+                "summary": "Get likes for a post",
+                "parameters": [
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved likes",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": { "type": "integer" },
+                                            "user_id": { "type": "integer" },
+                                            "post_id": { "type": "integer" },
+                                            "created_at": {
+                                                "type": "string",
+                                                "format": "date-time"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/posts/{postId}/unlike": {
+            "delete": {
+                "summary": "Unlike a post",
+                "parameters": [
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "required": true,
+                        "schema": { "type": "integer" }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully unliked post",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Post unliked successfully"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }

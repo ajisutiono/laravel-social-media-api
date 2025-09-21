@@ -72,16 +72,17 @@ You can open it using [Swagger Editor](https://editor.swagger.io/) or import int
 
 ```
 app/
- ┣ Http/
- ┃ ┣ Controllers/
- ┃ ┗ Middleware/
- ┣ Models/
- ┣ Services/        # Business logic
- ┣ Repositories/    # Data access layer
-config/
-database/
-routes/
-tests/
+┣ Http/
+ ┃ ┣ Controllers/    # Handles incoming requests and user logic
+ ┃ ┣ Requests/       # Request validation and authorization
+ ┃ ┗ Middleware/     # Custom HTTP middleware
+┣ Models/            # Eloquent models representing database tables
+┣ Services/          # Core business logic
+┣ Repositories/      # Data access and persistence layer
+config/              # Application configuration files
+database/            # Migrations, seeders, and factories
+routes/              # API route definitions
+tests/               # Automated tests (PHPUnit)
 ```
 
 ---
