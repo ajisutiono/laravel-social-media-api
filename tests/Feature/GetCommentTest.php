@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
-class GetAllCommentsTest extends TestCase
+class GetCommentTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -53,7 +53,7 @@ class GetAllCommentsTest extends TestCase
 
         $response =  $this->withHeaders([
             "Authorization" => "Bearer " . $token
-        ])->getJson("/api/posts/{$post->id}/comments/{$comment->id}");
+        ])->getJson("/api/posts/{$post->id}/comments");
 
         $response->assertStatus(200)
             ->assertJsonStructure([
@@ -63,7 +63,7 @@ class GetAllCommentsTest extends TestCase
     }
 
     #[Test]
-    public function userB_can_view_all_comments_created_by_userA()
+    public function user_can_get_detail_comments_created_by_other_user()
     {
         $userA = User::factory()->create([
             'password' => bcrypt('rahasia')
