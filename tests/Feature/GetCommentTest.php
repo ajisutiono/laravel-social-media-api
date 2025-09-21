@@ -63,7 +63,7 @@ class GetAllCommentsTest extends TestCase
     }
 
     #[Test]
-    public function userB_can_view_comments_created_by_userA()
+    public function userB_can_view_all_comments_created_by_userA()
     {
         $userA = User::factory()->create([
             'password' => bcrypt('rahasia')
