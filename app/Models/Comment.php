@@ -15,7 +15,7 @@ class Comment extends Model
     protected $fillable = [
         "user_id",
         "post_id",
-        "comment"
+        "comment",
     ];
 
     public function user()
@@ -26,5 +26,10 @@ class Comment extends Model
     public function post()
     {
         return $this->belongsTo(Post::class);
+    }
+
+    public function likes()
+    {
+        return $this->morphMany(Like::class, 'likeable');
     }
 }
