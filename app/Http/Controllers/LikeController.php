@@ -30,5 +30,30 @@ class LikeController extends Controller
         ], 201);
     }
 
+    public function showAll(LikeRequest $request)
+    {
+        $likes = $this->likeService->showLikes([
+            'likeable_id' => $request->likeable_id,
+            'likeable_type' => $request->likeable_type,
+        ]);
 
+        return response()->json([
+            'status' => 'success',
+            'data' => $likes,
+        ], 200);
+    }
+
+    public function destroy(LikeRequest $request)
+    {
+        $like = $this->likeService->removeLike([
+            'user_id' => Auth::id(),
+            'likeable_id' => $request->likeable_id,
+            'likeable_type' => $request->likeable_type,
+        ]);
+
+        return response()->json([
+            'message' => 'Unliked sucessfully',
+            'data' => $like
+        ], 200);
+    }
 }

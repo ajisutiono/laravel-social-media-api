@@ -28,16 +28,6 @@ Route::prefix('posts')->middleware('auth:api')->group(function () {
     Route::get('/{postId}/comments/{commentId}', [CommentController::class, 'show']);
     Route::patch('/{postId}/comments/{commentId}', [CommentController::class, 'update']);
     Route::delete('/{postId}/comments/{commentId}', [CommentController::class, 'destroy']);
-
-    //   // likes (post)
-    // Route::post('/{postId}/like', [LikeController::class, 'store']);
-    // Route::get('/{postId}/likes', [LikeController::class, 'showAll']);
-    // Route::delete('/{postId}/unlike', [LikeController::class, 'destroy']);
-
-    // // likes (comment)
-    // Route::post('/{postId}/comments/{commentId}/like', [LikeController::class, 'store']);
-    // Route::get('/{postId}/comments/{commentId}/likes', [LikeController::class, 'showAll']);
-    // Route::delete('/{postId}/comments/{commentId}/unlike', [LikeController::class, 'destroy']);
 });
 
 Route::middleware('auth:api')->group(function () {

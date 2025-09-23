@@ -17,4 +17,14 @@ class LikeService
     {
         return $this->likeRepositroy->add($data);
     }
+
+    public function showLikes(array $data)
+    {
+        return $this->likeRepositroy->getLikes($data);
+    }
+
+    public function removeLike(array $data)
+    {
+        return $this->likeRepositroy->remove($data);
+    }
 }
